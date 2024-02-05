@@ -1,0 +1,63 @@
+import java.util.Scanner;
+import java.util.Random;
+
+public class NumberGuessingGame {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+
+        // Set the number range
+        int minNumber = 1;
+        int maxNumber = 100;
+
+        // Get the number of attempts allowed
+        System.out.println("Enter the number of attempts allowed: ");
+        int maxAttempts = scanner.nextInt();
+
+        // Set up scorekeeping (optional)
+        int wins = 0;
+        int losses = 0;
+
+        // Play the game until all attempts are used
+        for (int round = 1; round <= maxAttempts; round++) {
+            int targetNumber = random.nextInt(maxNumber - minNumber + 1) + minNumber; // Generate random number
+
+            System.out.println("Round " + round + ": Guess the number between " + minNumber + " and " + maxNumber + ": ");
+
+            for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+                int guess = scanner.nextInt(); // Get user's guess
+
+                if (guess == targetNumber) { // Correct guess
+                    System.out.println("Congrats! You guessed the number in " + attempt + " attempts!");
+                    wins++;
+                    break;
+                } else if (guess < targetNumber) { // Guess is too low
+                    System.out.println("Your guess is too low. Try again!");
+                } else { // Guess is too high
+                    System.out.println("Your guess is too high. Try again!");
+                }
+
+                if (attempt == maxAttempts) { // No correct guess within attempts
+                    System.out.println("Sorry, you ran out of attempts. The number was " + targetNumber + ".");
+                    losses++;
+                }
+            }
+        }
+
+        // Display game statistics (optional)
+        System.out.println("Game statistics:");
+        System.out.println("Wins: " + wins);
+        System.out.println("Losses: " + losses);
+
+        // Ask if the user wants to play again
+        System.out.println("Play again? (y/n): ");
+        String playAgain = scanner.next();
+
+        if (playAgain.equalsIgnoreCase("y")) {
+            main(args); // Restart the game
+        } else {
+            System.out.println("Thanks for playing!");
+        }
+    }
+}
